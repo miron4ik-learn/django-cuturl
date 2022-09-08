@@ -20,3 +20,6 @@ def redirect(request, short_url):
   link.views += 1
   link.save()
   return HttpResponseRedirect(link.long_url)
+
+def handle_notfound(request, exception):
+  return render(request, 'main/notfound.html', status=404)
