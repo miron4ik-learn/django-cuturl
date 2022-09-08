@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Sum
 from django.contrib.auth.models import User
 from .models import Link
@@ -13,3 +14,9 @@ def index(request):
     'link_count': link_count,
     'views_count': views_count,
   })
+  
+def redirect(request, short_url):
+  link = get_object_or_404(Link, short_url=short_url)
+  link.views += 1
+  link.save()
+  return HttpResponseRedirect(link.long_url)
