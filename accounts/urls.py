@@ -14,14 +14,18 @@ def anonymous_required(func, redirect_to):
 
 urlpatterns = [
   path('register/',
-      anonymous_required(views.Register.as_view(), 'index'),
+      anonymous_required(views.Register.as_view(), 'profile'),
       name='register'),
   
   path('login/',
-      anonymous_required(views.Login.as_view(), 'index'),
+      anonymous_required(views.Login.as_view(), 'profile'),
       name='login'),
   
   path('logout/',
       login_required(views.Logout.as_view(), login_url=reverse_lazy('login')),
       name='logout'),
+  
+  path('profile/',
+      login_required(views.profile, login_url=reverse_lazy('login')),
+      name='profile'),
 ]

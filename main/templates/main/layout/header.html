@@ -15,7 +15,7 @@
 
           {% if request.user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link" href="profile.html">Профиль</a>
+              <a class="nav-link" href="{% url 'profile' %}">Профиль</a>
             </li>
           {% endif %}
         </ul>
