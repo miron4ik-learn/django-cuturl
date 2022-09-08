@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView, LogoutView
@@ -19,7 +19,13 @@ def profile(request):
       link.short_url = generate_short_url()
       
       link.save()
-      success = True
+      success = 'Ссылка успешно добавлена!'
+  elif request.GET.get('act') == 'delete':
+    link_id = request.GET.get('id')
+    if link_id:
+      link = get_object_or_404(Link, id=link_id, user=request.user.id)
+      link.delete()
+      success = 'Ссылка успешно удалена!'
   
   links = Link.objects.filter(user=request.user.id)
   
