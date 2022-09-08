@@ -1,6 +1,6 @@
 {% extends 'main/layout/base.html' %}
 
-{% block title %}Зарегистрироваться{% endblock %}
+{% block title %}Войти{% endblock %}
 
 {% block content %}
   <main class="container">
@@ -30,8 +30,8 @@
 
     <div class="row mt-5">
       <div class="col">
-        <h2 class="text-center">Регистрация</h2>
-        <p class="text-center">Если у вас уже есть логин и пароль, <a href="{% url 'login' %}">войдите на сайт</a></p>
+        <h2 class="text-center">Вход в личный кабинет</h2>
+        <p class="text-center">Если вы еще не зарегистрированы, то самое время <a href="{% url 'register' %}">зарегистрироваться</a></p>
       </div>
     </div>
 
@@ -47,15 +47,10 @@
 
           <div class="mb-3">
             <label for="password-input" class="form-label">Пароль</label>
-            <input type="password" name="password1" class="form-control" id="password-input" required>
+            <input type="password" name="password" class="form-control" id="password-input" required>
           </div>
 
-          <div class="mb-3">
-            <label for="password-input2" class="form-label">Пароль еще раз</label>
-            <input type="password" name="password2" class="form-control" id="password-input2" required>
-          </div>
-
-          <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+          <button type="submit" class="btn btn-primary">Войти</button>
         </form>
       </div>
     </div>
