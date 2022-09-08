@@ -12,12 +12,31 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Главная</a>
           </li>
+
+          {% if request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="profile.html">Профиль</a>
+            </li>
+          {% endif %}
         </ul>
 
+        {% if request.user.is_authenticated %}
+          <form class="d-flex">
+            <input class="form-control me-2" type="text" placeholder="Ссылка" aria-label="Ссылка">
+            <button class="btn btn-success" type="submit"><i class="bi bi-plus-lg"></i></button>
+          </form>
+        {% endif %}
+
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a href="{% url 'login' %}" class="btn btn-primary">Войти</a>
-          </li>
+          {% if not request.user.is_authenticated %}
+            <li class="nav-item">
+              <a href="{% url 'login' %}" class="btn btn-primary">Войти</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a href="{% url 'logout' %}" class="btn btn-primary">Выйти</a>
+            </li>
+          {% endif %}
         </ul>
       </div>
     </div>

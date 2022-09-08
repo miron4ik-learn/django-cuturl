@@ -1,8 +1,27 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, reverse_lazy
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 from . import views
 
+def anonymous_required(func, redirect_to):
+  def as_view(request, *args, **kwargs):
+    if request.user.is_authenticated:
+      return redirect(redirect_to)
+    response = func(request, *args, **kwargs)
+    return response
+  return as_view
+
 urlpatterns = [
-  path('register/', views.Register.as_view(), name='register'),
-  path('login/', views.Login.as_view(), name='login'),
+  path('register/',
+      anonymous_required(views.Register.as_view(), 'index'),
+      name='register'),
+  
+  path('login/',
+      anonymous_required(views.Login.as_view(), 'index'),
+      name='login'),
+  
+  path('logout/',
+      login_required(views.Logout.as_view(), login_url=reverse_lazy('login')),
+      name='logout'),
 ]

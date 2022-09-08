@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from .forms import RegisterForm, LoginForm
 
 class Register(CreateView):
@@ -16,4 +16,8 @@ class Login(LoginView):
   template_name = 'accounts/login.html'
   
   def get_success_url(self):
-    return reverse_lazy('profile')
+    return reverse_lazy('index')
+  
+class Logout(LogoutView):  
+  def get_next_page(self):
+    return reverse_lazy('login')

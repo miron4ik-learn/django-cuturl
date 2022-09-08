@@ -2,17 +2,19 @@
 
 {% block content %}
   <main class="container">
-    <div class="row mt-5">
-      <div class="col">
-        <h2 class="text-center">
-          Необходимо
-          <a href="{% url 'register' %}">зарегистрироваться</a>
-          или
-          <a href="{% url 'login' %}">войти</a>
-          под своей учетной записью
-        </h2>
+    {% if not request.user.is_authenticated %}
+      <div class="row mt-5">
+        <div class="col">
+          <h2 class="text-center">
+            Необходимо
+            <a href="{% url 'register' %}">зарегистрироваться</a>
+            или
+            <a href="{% url 'login' %}">войти</a>
+            под своей учетной записью
+          </h2>
+        </div>
       </div>
-    </div>
+    {% endif %}
 
     <div class="row mt-5">
       <div class="col">
