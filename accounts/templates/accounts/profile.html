@@ -4,44 +4,72 @@
 
 {% block content %}
   <main class="container">
-    <!-- <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-      Все ок
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div> -->
+    {% if success %}
+      <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        Ссылка успешно добавлена!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endif %}
 
-    <!-- <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-      А тут не ок
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div> -->
+    {% if form.errors %}
+      {% for field in form %}
+        {% if field.errors %}
+          <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+            {% for error in field.errors %}
+              {{ error | escape }}<br/>
+            {% endfor %}
+            
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
 
-    <div class="row mt-5">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Ссылка</th>
-            <th scope="col">Сокращение</th>
-            <th scope="col">Переходы</th>
-            <th scope="col">Действия</th>
-          </tr>
-        </thead>
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        {% for error in form.non_field_errors %}
+          {{ error | escape }}<br/>
+        {% endfor %}
+        
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endif %}
 
-        <tbody>
-          {% for link in links %}
+    {% if not links %}
+      <div class="alert alert-info alert-dismissible fade show mt-3" role="alert">
+        У вас нет ссылок.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% else %}
+      <div class="row mt-5">
+        <table class="table table-striped">
+          <thead>
             <tr>
-              <th scope="row">{{ forloop.counter }}</th>
-              <td><a href="{{ link.long_url }}" target="_blank">{{ link.long_url | slice:"0:50" }}</a></td>
-              <td class="short-link">{{ request.scheme }}://{{ request.META.HTTP_HOST }}/{{ link.short_url }}/</td>
-              <td>{{ link.views }}</td>
-              <td>
-                <a href="#" class="btn btn-primary btn-sm copy-btn" title="Скопировать в буфер" data-clipboard-text="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/{{ link.short_url }}/"><i class="bi bi-files"></i></a>
-                <a href="#" class="btn btn-danger btn-sm" title="Удалить"><i class="bi bi-trash"></i></a>
-              </td>
+              <th scope="col">#</th>
+              <th scope="col">Ссылка</th>
+              <th scope="col">Сокращение</th>
+              <th scope="col">Переходы</th>
+              <th scope="col">Действия</th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+
+          <tbody>
+            {% for link in links %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td><a href="{{ link.long_url }}" target="_blank">{{ link.long_url | slice:"0:50" }}</a></td>
+                <td class="short-link">{{ request.scheme }}://{{ request.META.HTTP_HOST }}/{{ link.short_url }}/</td>
+                <td>{{ link.views }}</td>
+                <td>
+                  <a href="#" class="btn btn-primary btn-sm copy-btn" title="Скопировать в буфер" data-clipboard-text="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/{{ link.short_url }}/"><i class="bi bi-files"></i></a>
+                  <a href="#" class="btn btn-danger btn-sm" title="Удалить"><i class="bi bi-trash"></i></a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
   </main>
 
   <div aria-live="polite" aria-atomic="true" class="position-relative">

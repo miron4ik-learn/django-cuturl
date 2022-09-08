@@ -8,5 +8,5 @@ class Link(models.Model):
     
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   long_url = models.URLField(verbose_name='Длинная ссылка')
-  short_url = models.CharField(verbose_name='Короткая ссылка', max_length=20)
+  short_url = models.CharField(verbose_name='Короткая ссылка', max_length=20, unique=True)
   views = models.PositiveIntegerField(verbose_name='Переходы', default=0)
